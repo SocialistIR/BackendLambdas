@@ -8,7 +8,7 @@ The code is written in python 3, and uses mySQL (although postgreSQL is a viable
 
 ## Table Layout
 
-You will need to create an Amazon RDS with the preferred DB type (this code supports mySQL by default). You will then need to set up AWS Secrets Manager to manage your Amazon RDS credentials - our function layers will query AWS Secrets Manager to connect to the database.
+You will need to create an Amazon RDS with the preferred DB type (this code supports mySQL by default). You will then need to set up AWS Secrets Manager to manage your Amazon RDS credentials - our function layers will query AWS Secrets Manager to connect to the database. You will then need to manually create the tables to match the following:
 
 **All Tables**
 ```
@@ -104,6 +104,10 @@ mysql> DESCRIBE Users;
 +----------+--------------+------+-----+---------+-------+
 5 rows in set (0.26 sec)
 ```
+## Lambdas
+
+Titles of the Lambdas should be pretty self explanatory. You can link them to a REST API Gateway, with the Integration Request for each method being of type LAMBDA_PROXY. All Lambdas should have the layer(s) in the Layer folder added to them for JWT and mySQL support. Lambdas should have a role which is inclusive of the managed policy 'AWSLambdaVPCAccessExecutionRole'. Image upload/download Lambdas also need S3 read/write permissions. Lambdas should be in the same VPC as the RDS.
+
 ## Limitations
 
  - **SECURITY** Currently, the secret used to encode and decode JWT tokens is stored in the layer. This is bad practice and should preferably moved to something like Secrets Manager.

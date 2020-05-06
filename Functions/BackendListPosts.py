@@ -25,12 +25,8 @@ logger.info("SUCCESS: Connection to RDS MySQL instance succeeded")
 def lambda_handler(event, context):
     # TODO implement
     try:
-        try:
-            params = json.loads(event['body'])
-        except:
-            params = json.loads(base64.b64decode(event['body']))
-        channelID=params['channelID']
-        
+        params = event['queryStringParameters']
+        channelID = params['channelID']
         logger.info(params)
         print(params)
     except Exception as e:
@@ -45,11 +41,12 @@ def lambda_handler(event, context):
                 'error': "Malformed request"
             })
         }
-        
+
     resp = {}
     
     with conn.cursor() as cur:
-        cur.execute('Select postID, channelID, userID, title, text, time_posted from Posts where channelID=%s order by time_posted limit 5', (channelID))
+        cur.execute('Select Posts.postID, Posts.channelID, Posts.userID, Posts.title, Posts.text, Posts.time_posted, \
+            Users.username from Posts inner join Users on Posts.userID=Users.userID where channelID=%s order by time_posted limit 5', (channelID))
         (results ) = cur.fetchall()
         
         # print(channelIDs)
@@ -60,7 +57,8 @@ def lambda_handler(event, context):
                 "userID" : result[2],
                 "title" : result[3],
                 "textbody" : result[4],
-                "time_posted" : result[5].timestamp()
+                "time_posted" : result[5].isoformat(),
+                "username" : result[6]
             }
             
         
