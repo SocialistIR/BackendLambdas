@@ -125,6 +125,6 @@ The following variables should be checked at and changed as per user's discretio
 
 - Get IaC working (CloudFormation/CDK) to integrate API Gateway, Secrets Manager and RDS
 - Create initial script to populate database with tables.
-- Refactor code to remove JWT secret from layer
-- Better support/documentation for image upload/download
+- Refactor code to remove JWT secret from layer.
+- Better support/documentation for image upload/download.
 - Use Foreign Keys in Database Tables (https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-defining-constraints.html)
