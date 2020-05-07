@@ -119,6 +119,7 @@ The following variables should be checked at and changed as per user's discretio
 - secret_name: (Layers/secretmanager.py) MySQL backend
 - region_name: (Layers/secretmanager.py) Deployment Region
 - GLOBAL_SECRET: (Layers/jwtvalidation.py) Secret for JWT Validation
+- Attach a AWS WAF(Web Application Firewall) to API Gateway to prevent external attacks such as Cross Site Scripting (XSS) and SQL Injection(SQLi). (https://aws.amazon.com/waf/)
 
 ## Roadmap
 
