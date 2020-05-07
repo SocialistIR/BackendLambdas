@@ -113,9 +113,17 @@ Titles of the Lambdas should be pretty self explanatory. You can link them to a 
  - **SECURITY** Currently, the secret used to encode and decode JWT tokens is stored in the layer. This is bad practice and should preferably moved to something like Secrets Manager.
  - **OPTIMISATION** Currently TokenBlacklist is being cleaned up everytime the Logout Lambda is being called. It is better practice to schedule a CloudWatch event to regularly trigger a Lambda to clean up the TokenBlacklist table instead.
 
+## User Discretion
+
+The following variables should be checked at and changed as per user's discretion-
+- secret_name: (Layers/secretmanager.py) MySQL backend
+- region_name: (Layers/secretmanager.py) Deployment Region
+- GLOBAL_SECRET: (Layers/jwtvalidation.py) Secret for JWT Validation
+
 ## Roadmap
 
 - Get IaC working (CloudFormation/CDK) to integrate API Gateway, Secrets Manager and RDS
 - Create initial script to populate database with tables.
 - Refactor code to remove JWT secret from layer
 - Better support/documentation for image upload/download
+- Use Foreign Keys in Database Tables (https://docs.aws.amazon.com/redshift/latest/dg/c_best-practices-defining-constraints.html)
